@@ -1,0 +1,17 @@
+{
+  "name": "sb-sandbox-mvp",
+  "version": "0.1.0",
+  "type": "module",
+  "private": true,
+  "description": "Isolated sandbox domain for rendering untrusted user/agent code. Runs on sb.sandbox-mvp-beige.vercel.app — a different origin from the main platform, so user code cannot read cookies or call APIs.",
+  "scripts": {
+    "dev": "vercel dev",
+    "deploy": "vercel --prod"
+  },
+  "devDependencies": {
+    "vercel": "^54.18.6"
+  },
+  "dependencies": {
+    "redis": "^4.7.0"
+  }
+}
