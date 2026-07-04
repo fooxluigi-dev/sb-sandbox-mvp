@@ -12,6 +12,6 @@
     "vercel": "^54.18.6"
   },
   "dependencies": {
-    "redis": "^4.7.0"
+    "redis": "^6.1.0"
   }
 }
