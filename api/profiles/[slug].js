@@ -7,7 +7,7 @@ import { redisGet } from '../_redis.js';
 const CSP_CONFIG = {
   basic: "default-src 'none'; style-src 'unsafe-inline'; img-src data:",
   builder: "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src * data:; connect-src *",
-  god: "default-src * 'unsafe-inline' 'unsafe-eval'; img-src * data:; connect-src *",
+  god: "default-src *; script-src * 'unsafe-inline' 'unsafe-eval'; img-src * data:; connect-src *; style-src * 'unsafe-inline'; font-src * data:",
 };
 
 export default async function handler(req, res) {
@@ -50,5 +50,7 @@ ${profile.code || ''}
 }
 
 function escapeCsp(s) {
-  return String(s).replace(/['"]/g, '');
+  // Keep single quotes (needed for CSP directives like 'unsafe-inline')
+  // Only strip double quotes to prevent header injection
+  return String(s).replace(/"/g, '');
 }
