@@ -44,7 +44,8 @@ ${profile.code || ''}
   // No cookies on this domain
   res.setHeader('Set-Cookie', 'sb_session=; Path=/; Max-Age=0; SameSite=Strict');
   // Extra headers to prevent any platform leak
-  res.setHeader('X-Frame-Options', 'SAMEORIGIN');
+  // Cross-origin iframe: allow framing from sandbox-mvp feed domain
+  res.setHeader('Content-Security-Policy', "frame-ancestors * https://*.vercel.app");
   res.setHeader('X-Content-Type-Options', 'nosniff');
   res.status(200).send(html);
 }
