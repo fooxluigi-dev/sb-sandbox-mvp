@@ -45,7 +45,9 @@ ${profile.code || ''}
   res.setHeader('Set-Cookie', 'sb_session=; Path=/; Max-Age=0; SameSite=Strict');
   // Extra headers to prevent any platform leak
   // Cross-origin iframe: allow framing from sandbox-mvp feed domain
-  res.setHeader('Content-Security-Policy', "frame-ancestors https://sandbox-mvp-beige.vercel.app");
+  // Derive allowed frame origin from APP_ORIGIN (supports localhost dev) or fallback to production
+  const frameOrigin = process.env.APP_ORIGIN || 'https://sandbox-mvp-beige.vercel.app';
+  res.setHeader('Content-Security-Policy', `frame-ancestors ${frameOrigin}`);
   res.setHeader('X-Content-Type-Options', 'nosniff');
   res.status(200).send(html);
 }
