@@ -67,8 +67,9 @@ ${post.sandbox.code}
 </html>`;
 
   res.setHeader('Content-Type', 'text/html; charset=utf-8');
-  // Cross-origin iframe: allow framing from any vercel.app domain (feed.sandbox-mvp, etc.)
-  res.setHeader('Content-Security-Policy', "frame-ancestors https://*.vercel.app");
+  // Cross-origin iframe: allow framing only from the app origin (pinned, no wildcard)
+  const frameOrigin = process.env.APP_ORIGIN || 'https://sandbox-mvp-beige.vercel.app';
+  res.setHeader('Content-Security-Policy', `frame-ancestors ${frameOrigin}`);
   res.setHeader('X-Content-Type-Options', 'nosniff');
   res.status(200).send(html);
 }
