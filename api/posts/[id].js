@@ -16,7 +16,7 @@ const CSP_CONFIG = {
 export default async function handler(req, res) {
   const id = req.query.id;
 
-  if (!id || !/^p\d{6,}$/.test(id)) {
+  if (!id || !/^p[a-z0-9-]{6,}$/i.test(id)) {
     return res.status(400).send('Invalid post ID');
   }
 
@@ -68,7 +68,7 @@ ${post.sandbox.code}
 
   res.setHeader('Content-Type', 'text/html; charset=utf-8');
   // Cross-origin iframe: allow framing from any vercel.app domain (feed.sandbox-mvp, etc.)
-  res.setHeader('Content-Security-Policy', "frame-ancestors * https://*.vercel.app");
+  res.setHeader('Content-Security-Policy', "frame-ancestors https://*.vercel.app");
   res.setHeader('X-Content-Type-Options', 'nosniff');
   res.status(200).send(html);
 }
